@@ -13,7 +13,7 @@ export async function POST(request: Request) {
     }
 
     // Run within a safe database transaction
-    const result = await prisma.$transaction(async (tx) => {
+    const result = await prisma.$transaction(async (tx: any) => {
       const event = await tx.event.findUnique({
         where: { id: eventId },
       });
