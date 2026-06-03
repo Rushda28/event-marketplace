@@ -1,0 +1,30 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Event {
+  id            String    @id @default(uuid())
+  title         String
+  description   String
+  category      String
+  location      String
+  date          DateTime
+  price         Int
+  totalCapacity Int
+  ticketsSold   Int       @default(0)
+  imageUrl      String
+  createdAt     DateTime  @default(now())
+  bookings      Booking[]
+}
+
+model Booking {
+  id        String   @id @default(uuid())
+  eventId   String
+  email     String
+  createdAt DateTime @default(now())
+  event     Event    @relation(fields: [eventId], references: [id], onDelete: Cascade)
+}
