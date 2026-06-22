@@ -30,7 +30,6 @@ export default function MarketplaceHome() {
   const [search, setSearch] = useState<string>("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  // Booking Modal State
   const [activeEvent, setActiveEvent] = useState<Event | null>(null);
   const [ticketQuantity, setTicketQuantity] = useState<number>(1);
   const [bookingEmail, setBookingEmail] = useState<string>("");
@@ -38,7 +37,6 @@ export default function MarketplaceHome() {
   const [paymentStep, setPaymentStep] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
 
-  // My Tickets States
   const [lookupEmail, setLookupEmail] = useState<string>("");
   const [myTickets, setMyTickets] = useState<BookingWithEvent[]>([]);
   const [ticketLoading, setTicketLoading] = useState<boolean>(false);
@@ -94,7 +92,6 @@ export default function MarketplaceHome() {
 
   const categories = ["All", "Technology", "Music", "Design"];
 
-  // FEATURE 2: SIMULATED PAYMENT PIPELINE DELAY & MULTI-STEP AUTHORIZATION
   const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
   const handleCheckout = async (e: React.FormEvent) => {
@@ -147,7 +144,6 @@ export default function MarketplaceHome() {
     }
   };
 
-  // FEATURE 3: NATIVE PDF/PRINT ENGINE WITH INJECTED GLOBAL STYLES
   const printPasses = () => {
     const printContent = document.getElementById("printable-ticket-manifest");
     if (!printContent) return;
@@ -187,7 +183,6 @@ export default function MarketplaceHome() {
     }
   };
 
-  // FEATURE 1: TICKET QUANTITY AGGREGATION CALCULATOR
   const totalTicketsBooked = myTickets.length;
 
   return (
@@ -221,7 +216,6 @@ export default function MarketplaceHome() {
         </button>
       </div>
 
-      {/* VIEW ONE: EXPLORE MARKETPLACE EVENTS */}
       {activeTab === "explore" && (
         <>
           <div className="mb-10 text-center md:text-left">
@@ -276,7 +270,6 @@ export default function MarketplaceHome() {
                 return (
                   <div key={event.id} className="bg-white border border-slate-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow flex flex-col">
                     <div className="h-48 w-full relative bg-slate-100">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src={event.imageUrl} alt={event.title} className="w-full h-full object-cover" />
                       <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm px-2.5 py-1 rounded-md text-[10px] font-bold text-slate-800 border border-slate-200/40 uppercase tracking-wider">
                         {event.category}
@@ -333,7 +326,6 @@ export default function MarketplaceHome() {
         </>
       )}
 
-      {/* VIEW TWO: PERSONAL TICKETS LOOKUP */}
       {activeTab === "tickets" && (
         <div className="max-w-2xl mx-auto py-4">
           <div className="mb-8 text-center bg-white p-6 rounded-xl border border-slate-200/60 shadow-sm relative overflow-hidden">
@@ -358,7 +350,6 @@ export default function MarketplaceHome() {
               </button>
             </form>
 
-            {/* FEATURE 1 & 3 UTILITY STATUS CHIP HEADER WITH CLEAN SESSION CLEARING */}
             {ticketSearched && myTickets.length > 0 && (
               <div className="mt-5 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
                 <span className="text-slate-500 font-medium">
