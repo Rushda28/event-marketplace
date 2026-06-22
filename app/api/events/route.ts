@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
-// GET /api/events - Fetch all marketplace events
 export async function GET() {
   try {
     const events = await prisma.event.findMany({
@@ -14,7 +13,6 @@ export async function GET() {
   }
 }
 
-// POST /api/events - Create a new event manually
 export async function POST(request: Request) {
   try {
     const body = await request.json();

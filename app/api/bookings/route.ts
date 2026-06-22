@@ -12,7 +12,6 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Missing required fields or invalid quantity" }, { status: 400 });
     }
 
-    // Run within a safe database transaction
     const result = await prisma.$transaction(async (tx: any) => {
       const event = await tx.event.findUnique({
         where: { id: eventId },
@@ -22,24 +21,21 @@ export async function POST(request: Request) {
         throw new Error("Event not found");
       }
 
-      // Check if requested quantity exceeds remaining capacity
       if (event.ticketsSold + ticketCount > event.totalCapacity) {
         throw new Error("NOT_ENOUGH_SEATS");
       }
 
-      // Loop and create an individual booking record for each pass requested
       const bookings = [];
       for (let i = 0; i < ticketCount; i++) {
         const booking = await tx.booking.create({
           data: { 
             eventId, 
-            email: email.trim().toLowerCase() // FORCE LOWERCASE HERE
+            email: email.trim().toLowerCase() 
           },
         });
         bookings.push(booking);
       }
 
-      // Increment tickets sold count safely by the exact quantity
       await tx.event.update({
         where: { id: eventId },
         data: { ticketsSold: { increment: ticketCount } },
